@@ -1,4 +1,5 @@
-import * as React from 'react';
+//import * as React from 'react';
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,12 +14,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+
+import axios from 'axios';
+import Swal from 'sweetalert2';
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://www.geoinn.net/">
+        GEOINN TI
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -28,7 +33,67 @@ function Copyright(props) {
 
 const theme = createTheme();
 
+
+
+
+
 export default function SignUp() {
+
+
+    const [correo, setCorreo] = useState('');
+    const [contrasena, setContrasena] = useState('');
+    const [nombre, setNombre] = useState('');
+
+
+  
+    const handleLogin= async(e) =>{
+        e.preventDefault();
+
+        const usuario = {nombre, correo, contrasena}
+
+        //console.log(usuario);
+
+        const respuesta= await axios.post(`/jefe/crear`, usuario);
+        console.log(respuesta);
+        const mensaje = respuesta.data.mensaje;
+
+        if(mensaje !=='Bienvenido'){
+            
+            
+            Swal.fire({
+               
+                icon: 'error',
+                title: mensaje,
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+        }else{
+            
+            const token = respuesta.data.token;
+            const nombre = respuesta.data.nombre;
+            const idUsuario = respuesta.data.id;
+             
+            Swal.fire({
+                 icon: 'success',
+                 title: mensaje,
+                 showConfirmButton: false,
+                 timer: 1500
+            })
+            localStorage.setItem('token', token);
+            localStorage.setItem('nombre', nombre);
+            localStorage.setItem('idUsuario', idUsuario);
+            
+            window.location.href='/dashboard'
+        }
+
+
+  }
+
+
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -54,22 +119,23 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Registro
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleLogin} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
+                  autoComplete="Nombre Completo"
+                  name="nombreCompleto"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="nombreCompleto"
+                  label="Nombre"
                   autoFocus
+                  onChange={(e)=>setNombre(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
@@ -78,32 +144,34 @@ export default function SignUp() {
                   name="lastName"
                   autoComplete="family-name"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
+                  id="correo"
+                  label="Correo electrónico"
+                  name="correo"
                   autoComplete="email"
+                  onChange={(e)=>setCorreo(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
+                  name="contrasena"
+                  label="Contraseña"
                   type="password"
-                  id="password"
+                  id="contrasena"
                   autoComplete="new-password"
+                  onChange={(e)=>setContrasena(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  label="Quiero recibir más información por email."
                 />
               </Grid>
             </Grid>
@@ -113,12 +181,12 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Registrar
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/" variant="body2">
-                  Already have an account? Sign in
+                  Ya tiene cuenta? Ingrese aquí
                 </Link>
               </Grid>
             </Grid>

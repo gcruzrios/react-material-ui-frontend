@@ -3,7 +3,8 @@ import {
   BrowserRouter as Router,
   Routes, 
   Route,
-  Link
+  Link,
+  Navigate,
 } from "react-router-dom";
 
 import SignInSide from './components/SignInSide';
@@ -15,31 +16,46 @@ import Dashboard from './components/Dashboard';
 
 import './App.css';
 
+
+
+const estaAutenticado =()=>{
+  const token = localStorage.getItem('token');
+  if(token){
+   return <Navigate to="/" replace />;
+ }else{
+   return false;
+ }
+}
+
+// const ProtectedRoute = (children) => {
+//   const token = localStorage.getItem('token');
+//   if (!token) {
+//     
+//   }
+//   return children;
+// };
+
+
+
 function App() {
   return (
     <Router>
       <div>
-        {/* <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-          </ul>
-        </nav> */}
-
+       
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Routes>
-          
-          
           <Route path='/' exact element={<SignInSide/>} />
-          <Route path='/dashboard' element={<Dashboard/>} />
+
+
+          <Route path='/dashboard' element={
+
+                estaAutenticado()? <Dashboard/> : <Navigate to='/' />
+                  
+              
+          } />
+         
+         
           <Route path='/login' element={<SignIn/>} />
           <Route path='/register' element={<SignUp/>} />
           

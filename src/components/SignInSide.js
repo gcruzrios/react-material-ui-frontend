@@ -1,4 +1,8 @@
-import * as React from 'react';
+
+import axios from 'axios';
+import React, { useState } from 'react'
+import Swal from 'sweetalert2';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,8 +21,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://www.geoinn.net/">
+        GEOINN TI
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -29,6 +33,48 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
+
+  const [correo, setCorreo] = useState('');
+  const [contrasena, setContrasena] = useState('')
+
+   
+  const handleLogin= async(e) =>{
+      e.preventDefault();
+
+      const usuario = {correo, contrasena}
+      const respuesta= await axios.post(`/jefe/login`, usuario);
+      console.log(respuesta);
+      const mensaje = respuesta.data.mensaje;
+
+      if(mensaje !=='Bienvenido'){
+          
+          
+          Swal.fire({
+             
+              icon: 'error',
+              title: mensaje,
+              showConfirmButton: false,
+              timer: 1500
+          })
+
+      }else{
+          
+          const token = respuesta.data.token;
+          const nombre = respuesta.data.nombre;
+          const idUsuario = respuesta.data.id;
+           
+       
+          localStorage.setItem('token', token);
+          localStorage.setItem('nombre', nombre);
+          localStorage.setItem('idUsuario', idUsuario);
+          
+          window.location.href='/dashboard'
+      }
+    
+  }
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -38,16 +84,16 @@ export default function SignInSide() {
     });
 
 
-    const token = 'TOKEN';
-    const username = 'USERNAME';
-    const idUser = '1';
+    // const token = 'TOKEN';
+    // const username = 'USERNAME';
+    // const idUser = '1';
              
          
-    localStorage.setItem('token', token);
-    localStorage.setItem('username', username);
-    localStorage.setItem('idUser', idUser);
+    // localStorage.setItem('token', token);
+    // localStorage.setItem('username', username);
+    // localStorage.setItem('idUser', idUser);
     
-    window.location.href='/dashboard'
+    // window.location.href='/dashboard'
 
 
 
@@ -86,32 +132,34 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Ingrese sus datos 
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component="form" noValidate onSubmit={handleLogin} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Correo electrónico"
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={(e)=>setCorreo(e.target.value)}
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Contraseña"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e)=>setContrasena(e.target.value)}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                label="Recordarme"
               />
               <Button
                 type="submit"
@@ -119,17 +167,17 @@ export default function SignInSide() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Entrar
               </Button>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
-                    Forgot password?
+                    Olvido la contraseña?
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link href="/register" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                    {"No tiene cuenta aún? Registrese"}
                   </Link>
                 </Grid>
               </Grid>

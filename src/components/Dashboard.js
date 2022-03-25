@@ -1,4 +1,5 @@
-import * as React from 'react';
+
+import React, { useEffect } from "react";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -6,10 +7,10 @@ import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 
-
-
-
-
+import {
+  BrowserRouter as Router,
+  Navigate,
+} from "react-router-dom";
 
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -32,8 +33,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://www.geoinn.net/">
+        GEOINN TI
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -44,11 +45,31 @@ function Copyright(props) {
 
 function Logout(props) {
   return (
-      <Link color="inherit"  href="/"  {...props}>
-        Logout
+
+      
+      <Link color="inherit"    href="/"  {...props}>
+         Salir
       </Link>
     );
 }
+
+function Welcome(props) {
+  return (
+     
+    <Typography
+    component="p"
+    variant="p"
+    color="inherit"
+    noWrap
+    sx={{ flexDirection: 'row-reverse' }}
+    >
+    {localStorage.getItem('nombre')} | {' '} 
+
+    </Typography>
+    );
+}
+
+
 
 function preventDefault(event) {
   event.preventDefault();
@@ -103,10 +124,41 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
+
+  // const estaAutenticado =()=>{
+  //   const token = localStorage.getItem('token');
+  //   console.log('token:', token);
+  //   if(token){
+  //    return true;
+  //  }else{
+  //    return false;
+  //  }
+  // }
+  
+
+  // useEffect(() => {
+  //   if (!estaAutenticado()){
+  //       console.log("No esta autenticado");
+  //       // window.location.href='/'
+      
+  //     }else{
+  //       console.log("Esta autenticado");
+  //     }  
+  // }, []);
+
+
   const [open, setOpen] = React.useState(true);
+  
+   
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+
+  const logout = ()=>{
+    localStorage.clear();
+    window.location.href='/'
+  }
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -137,17 +189,19 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Inicio
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            {/* <Link color="inherit" href="/logout" onClick={preventDefault}  sx={{ flexDirection: 'row-reverse' }} md={{ mt: 3, ml:5 }}>
-                Logout
-            </Link> */}
-            <Logout sx={{ flexDirection: 'row-reverse' }}/>
+          
+            <Welcome />
+
+     
+
+            <Logout sx={{ flexDirection: 'row-reverse' }} onClick={()=>logout()} />
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
