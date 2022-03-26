@@ -53,12 +53,10 @@ function preventDefault(event) {
 
 
 
-function UsersContent() {
+function ClientsContent() {
 
   const [open, setOpen] = React.useState(true);
   
-  console.log('en users:',open)
-   
   const toggleDrawer = () => {
     setOpen(!open);
     console.log("en Users:",open);
@@ -122,6 +120,6 @@ function UsersContent() {
 
 //export default Users
 
-export default function User() {
-    return <UsersContent />;
+export default function Client() {
+    return <ClientsContent />;
 }

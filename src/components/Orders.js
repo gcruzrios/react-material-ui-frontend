@@ -56,9 +56,11 @@ export default function Orders(){
   const [modalEliminar, setModalEliminar]=useState(false);
   
   const [usuarioSeleccionado, setUsuarioSeleccionado]=useState({
-    nombre: '',
-    apellidos:'',
     identificacion: '',
+    nombre: '',
+    papellido:'',
+    sapellido:'',
+    sexo:'',
     puesto: '',
     tcontrato:'',
     jefe:localStorage.getItem('idUsuario')
@@ -235,7 +237,7 @@ export default function Orders(){
         </Button> 
       </Stack>
       <br/>
-    <Table size="small" fullWidth>
+    <Table>
         <TableHead>
           <TableRow>
             <TableCell>Identificación</TableCell>

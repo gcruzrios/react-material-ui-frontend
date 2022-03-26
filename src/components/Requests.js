@@ -53,7 +53,7 @@ function preventDefault(event) {
 
 
 
-function UsersContent() {
+function RequestsContent() {
 
   const [open, setOpen] = React.useState(true);
   
@@ -122,6 +122,6 @@ function UsersContent() {
 
 //export default Users
 
-export default function User() {
-    return <UsersContent />;
+export default function Request() {
+    return <RequestsContent />;
 }

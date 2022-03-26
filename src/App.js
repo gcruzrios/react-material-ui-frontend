@@ -17,8 +17,14 @@ import NotFound from './components/NotFound';
 import './App.css';
 import Users from "./components/Users";
 import Usuarios from "./components/Usuarios";
+import Consulta from "./components/Consulta";
 
 
+import Request from "./components/Requests";
+import Client from "./components/Clients";
+import Reportes from "./components/Reports";
+import Integraciones from "./components/Integrations";
+import Mapas from "./components/Maps";
 
 const estaAutenticado =()=>{
   const token = localStorage.getItem('token');
@@ -58,9 +64,17 @@ function App() {
           } />
          
           <Route exact path='/users' element={<Users/>} />
+          <Route exact path='/requests' element={<Request/>} />
+          <Route exact path='/clients' element={<Client/>} />
+          <Route exact path='/reports' element={<Reportes/>} />
+          <Route exact path='/integrations' element={<Integraciones/>} />
+          <Route exact path='/maps' element={<Mapas/>} />
+
+
           <Route exact path='/login' element={<SignIn/>} />
           <Route exact path='/register' element={<SignUp/>} />
           <Route exact path='/usuarios' element={<Usuarios/>} />
+          <Route exact path='/consulta' element={<Consulta/>} />
            
           <Route path='*' element={<NotFound/>} />
           

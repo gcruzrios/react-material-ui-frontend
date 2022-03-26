@@ -6,7 +6,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-
+import { useLocation } from 'react-router-dom'
 import {
   BrowserRouter as Router,
   Navigate,
@@ -101,11 +101,40 @@ const AppBar = styled(MuiAppBar, {
     }),
   );
 
+
+    
+
+
 export default function AppTopBar(props) {
 
 
   const [open, setOpen] = React.useState(true);
-  
+
+  const TituloBar = () => {
+  const location = useLocation();
+  //console.log(location.pathname)
+    if (location.pathname ==='/users'){
+      return "Usuarios";
+    }
+    if (location.pathname ==='/requests'){
+      return "Pedidos";
+    }
+    if (location.pathname ==='/clients'){
+      return "Clientes";
+    }
+    
+    if (location.pathname ==='/reports'){
+      return "Reportes";
+    }
+    
+    if (location.pathname ==='/integrations'){
+      return "Integraciones";
+    }
+    
+    if (location.pathname ==='/maps'){
+      return "Mapas";
+    }
+  } 
    
   const toggleDrawer = () => {
     setOpen(!open);
@@ -147,7 +176,7 @@ export default function AppTopBar(props) {
         noWrap
         sx={{ flexGrow: 1 }}
       >
-        Inicio
+        { TituloBar() }
       </Typography>
       <IconButton color="inherit">
         <Badge badgeContent={4} color="secondary">
