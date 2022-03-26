@@ -49,11 +49,6 @@ const styles = {
   }
 };
 
-const textstyles = {
-  padding: '5px',
-  margin: '5px'
-}
-
 export default function Orders(){
   const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]=useState(false);
@@ -117,9 +112,11 @@ export default function Orders(){
       var dataNueva=data;
       dataNueva.map(usuario=>{
         if(usuarioSeleccionado._id===usuario._id){
-          usuario.nombre=usuarioSeleccionado.nombre;
-          usuario.apellidos=usuarioSeleccionado.apellidos;
           usuario.identificacion=usuarioSeleccionado.identificacion;
+          usuario.nombre=usuarioSeleccionado.nombre;
+          usuario.papellido=usuarioSeleccionado.papellido;
+          usuario.sapellido=usuarioSeleccionado.sapellido;
+          usuario.sexo=usuarioSeleccionado.sexo;
           usuario.puesto =usuarioSeleccionado.puesto;
           usuario.tcontrato=usuarioSeleccionado.tcontrato;
           usuario.jefe=usuarioSeleccionado.jefe;
@@ -167,9 +164,12 @@ export default function Orders(){
       <br />
       <TextField name="nombre" variant="standard"  size="small" fullWidth  label="Nombre" onChange={handleChange}/>
       <br />
-      <TextField name="apellidos" variant="standard"  size="small" fullWidth  label="Apellido" onChange={handleChange}/>
+      <TextField name="papellido" variant="standard"  size="small" fullWidth  label="Primer Apellido" onChange={handleChange}/>
       <br />
-      
+      <TextField name="sapellido" variant="standard"  size="small" fullWidth  label="Segundo Apellido" onChange={handleChange}/>
+      <br />
+      <TextField name="sexo" variant="standard"  size="small" fullWidth  label="Sexo" onChange={handleChange}/>
+      <br />
       <TextField name="puesto" variant="standard"  size="small" fullWidth  label="Puesto" onChange={handleChange}/>
       <br />
       <TextField name="tcontrato" variant="standard"  size="small" fullWidth  label="Tipo de contrato" onChange={handleChange}/>
@@ -188,7 +188,11 @@ export default function Orders(){
       <br />
       <TextField name="nombre" className={styles.inputMaterial}  variant="standard"  size="small" fullWidth  label="Nombre" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.nombre}/>
       <br />
-      <TextField name="apellidos" className={styles.inputMaterial}  variant="standard"  size="small" fullWidth  label="Apellido" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.apellidos}/>
+      <TextField name="papellido" className={styles.inputMaterial}  variant="standard"  size="small" fullWidth  label="Primer Apellido" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.papellido}/>
+      <br />
+      <TextField name="sapellido" className={styles.inputMaterial}  variant="standard"  size="small" fullWidth  label="Segundo Apellido" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.sapellido}/>
+      <br />
+      <TextField name="sexo" className={styles.inputMaterial}  variant="standard"  size="small" fullWidth  label="Sexo" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.sexo}/>
       <br />
       <TextField name="puesto" className={styles.inputMaterial}  variant="standard"  size="small" fullWidth  label="Puesto" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.puesto}/>
       <br />
@@ -236,10 +240,12 @@ export default function Orders(){
           <TableRow>
             <TableCell>Identificación</TableCell>
             <TableCell>Nombre</TableCell>
-            <TableCell>Apellidos</TableCell>
+            <TableCell>Apellido</TableCell>
+            <TableCell>Apellido</TableCell>
+            <TableCell>Sexo</TableCell>
             <TableCell>Puesto</TableCell>
             <TableCell>Tipo de contrato</TableCell>
-            <TableCell align="right">Salario</TableCell>
+            <TableCell align="right">Beneficio</TableCell>
             <TableCell>Acciones</TableCell>
             
           </TableRow>
@@ -249,7 +255,9 @@ export default function Orders(){
             <TableRow key={usuario.id}>
               <TableCell>{usuario.identificacion}</TableCell>
               <TableCell>{usuario.nombre}</TableCell>
-              <TableCell>{usuario.apellidos}</TableCell>
+              <TableCell>{usuario.papellido}</TableCell>
+              <TableCell>{usuario.sapellido}</TableCell>
+              <TableCell>{usuario.sexo}</TableCell>
               <TableCell>{usuario.puesto}</TableCell>
               <TableCell>{usuario.tcontrato}</TableCell>
               <TableCell align="right">500000.00</TableCell>

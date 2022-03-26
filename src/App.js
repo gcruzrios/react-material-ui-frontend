@@ -12,7 +12,7 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 
 import Dashboard from './components/Dashboard';
-
+import NotFound from './components/NotFound';
 
 import './App.css';
 import Users from "./components/Users";
@@ -50,18 +50,21 @@ function App() {
           <Route path='/' exact element={<SignInSide/>} />
 
 
-          <Route path='/dashboard' element={
+          <Route exact path='/dashboard' element={
 
                 estaAutenticado()? <Dashboard/> : <Navigate to='/' />
                   
               
           } />
          
-          <Route path='/users' element={<Users/>} />
-          <Route path='/login' element={<SignIn/>} />
-          <Route path='/register' element={<SignUp/>} />
-          <Route path='/usuarios' element={<Usuarios/>} />
+          <Route exact path='/users' element={<Users/>} />
+          <Route exact path='/login' element={<SignIn/>} />
+          <Route exact path='/register' element={<SignUp/>} />
+          <Route exact path='/usuarios' element={<Usuarios/>} />
+           
+          <Route path='*' element={<NotFound/>} />
           
+           
         </Routes>
       </div>
     </Router>

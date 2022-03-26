@@ -102,9 +102,11 @@ export default function Usuarios() {
         var dataNueva=data;
         dataNueva.map(usuario=>{
           if(usuarioSeleccionado._id===usuario._id){
-            usuario.nombre=usuarioSeleccionado.nombre;
-            usuario.apellidos=usuarioSeleccionado.apellidos;
             usuario.identificacion=usuarioSeleccionado.identificacion;
+            usuario.nombre=usuarioSeleccionado.nombre;
+            usuario.papellido=usuarioSeleccionado.papellido;
+            usuario.sapellido=usuarioSeleccionado.sapellido;
+            usuario.sexo=usuarioSeleccionado.sexo;
             usuario.puesto =usuarioSeleccionado.puesto;
             usuario.tcontrato=usuarioSeleccionado.tcontrato;
             usuario.jefe=usuarioSeleccionado.jefe;
@@ -123,6 +125,7 @@ export default function Usuarios() {
       .then(response=>{
         setData(data.filter(usuario=>usuario.id!==usuarioSeleccionado._id));
         abrirCerrarModalEliminar();
+        peticionGet();
       })
     }
 
@@ -150,11 +153,16 @@ export default function Usuarios() {
     const bodyInsertar=(
       <div className={styles.modal}>
         <h3>Agregar Nuevo Usuario</h3>
+        <TextField name="identificacion" className={styles.inputMaterial} label="Identificación" onChange={handleChange}/>
+        <br />
+        
         <TextField name="nombre" className={styles.inputMaterial} label="Nombre" onChange={handleChange}/>
         <br />
-        <TextField name="apellidos" className={styles.inputMaterial} label="Apellido" onChange={handleChange}/>
+        <TextField name="papellido" className={styles.inputMaterial} label="Primer Apellido" onChange={handleChange}/>
         <br />
-        <TextField name="identificacion" className={styles.inputMaterial} label="Identificación" onChange={handleChange}/>
+        <TextField name="sapellido" className={styles.inputMaterial} label="Segundo Apellido" onChange={handleChange}/>
+        <br />
+        <TextField name="sexo" className={styles.inputMaterial} label="Sexo" onChange={handleChange}/>
         <br />
         <TextField name="puesto" className={styles.inputMaterial} label="Puesto" onChange={handleChange}/>
         <br />
@@ -170,11 +178,16 @@ export default function Usuarios() {
     const bodyEditar=(
       <div className={styles.modal}>
         <h3>Editar Usuario</h3>
+        
+        <TextField name="identificacion" className={styles.inputMaterial} label="Identificación" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.identificacion}/>
+        <br />
         <TextField name="nombre" className={styles.inputMaterial} label="Nombre" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.nombre}/>
         <br />
-        <TextField name="apellidos" className={styles.inputMaterial} label="Apellido" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.apellidos}/>
+        <TextField name="papellido" className={styles.inputMaterial} label="Primer Apellido" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.papellido}/>
         <br />
-        <TextField name="identificacion" className={styles.inputMaterial} label="Identificación" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.identificacion}/>
+        <TextField name="sapellido" className={styles.inputMaterial} label="Segundo Apellido" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.sapellido}/>
+        <br />
+        <TextField name="sexo" className={styles.inputMaterial} label="Sexo" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.sexo}/>
         <br />
         <TextField name="puesto" className={styles.inputMaterial} label="Puesto" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.puesto}/>
         <br />
@@ -209,9 +222,12 @@ export default function Usuarios() {
        <Table>
          <TableHead>
            <TableRow>
-             <TableCell>Nombre</TableCell>
-             <TableCell>Apellidos</TableCell>
+             
              <TableCell>Identificación</TableCell>
+             <TableCell>Nombre</TableCell>
+             <TableCell>Primer Apellido</TableCell>
+             <TableCell>Segundo Apellido</TableCell>
+             <TableCell>Sexo</TableCell>
              <TableCell>Puesto</TableCell>
              <TableCell>Tipo de contrato</TableCell>
              <TableCell>Acciones</TableCell>
@@ -221,9 +237,11 @@ export default function Usuarios() {
          <TableBody>
            {data.map(usuario=>(
              <TableRow key={usuario.id}>
-               <TableCell>{usuario.nombre}</TableCell>
-               <TableCell>{usuario.apellidos}</TableCell>
                <TableCell>{usuario.identificacion}</TableCell>
+               <TableCell>{usuario.nombre}</TableCell>
+               <TableCell>{usuario.papellido}</TableCell>
+               <TableCell>{usuario.sapellido}</TableCell>
+               <TableCell>{usuario.sexo}</TableCell>
                <TableCell>{usuario.puesto}</TableCell>
                <TableCell>{usuario.tcontrato}</TableCell>
                <TableCell>
