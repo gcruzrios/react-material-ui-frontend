@@ -5,6 +5,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Modal, Button, TextField} from '@material-ui/core';
 import {Edit, Delete} from '@material-ui/icons';
 
+
 const useStyles = makeStyles((theme) => ({
     modal: {
       position: 'absolute',
@@ -41,9 +42,16 @@ export default function Usuarios() {
       identificacion: '',
       puesto: '',
       tcontrato:'',
-      jefe:''
+      jefe:localStorage.getItem('idUsuario')
+
     })
   
+
+    useEffect(() => {
+
+      peticionGet();
+     
+  }, [])
 
   //   const usuario={
   //     nombre,
@@ -62,7 +70,7 @@ export default function Usuarios() {
         ...prevState,
         [name]: value
       }))
-      //console.log(usuario);
+      console.log(usuarioSeleccionado);
     }
   
     const peticionGet=async()=>{
@@ -76,23 +84,26 @@ export default function Usuarios() {
     }
   
     const peticionPost=async()=>{
+      console.log(usuarioSeleccionado);
       const token = localStorage.getItem('token');
-      await axios.post('empleado/crear-empleado/', usuarioSeleccionado, {headers:{token:token}})
+      await axios.post('empleado/crear/', usuarioSeleccionado, {headers:{token:token}})
       .then(response=>{
+        
         setData(data.concat(response.data))
         abrirCerrarModalInsertar()
+        peticionGet();
       })
     }
   
     const peticionPut=async()=>{
        const token = localStorage.getItem('token');
-       await axios.put('/empleado/actualizar/'+usuarioSeleccionado.id, usuarioSeleccionado,{headers:{token:token}})
+       await axios.put('/empleado/actualizar/'+usuarioSeleccionado._id, usuarioSeleccionado,{headers:{token:token}})
       .then(response=>{
         var dataNueva=data;
         dataNueva.map(usuario=>{
-          if(usuario.id===usuario.id){
+          if(usuarioSeleccionado._id===usuario._id){
             usuario.nombre=usuarioSeleccionado.nombre;
-            usuario.apellido=usuarioSeleccionado.apellidos;
+            usuario.apellidos=usuarioSeleccionado.apellidos;
             usuario.identificacion=usuarioSeleccionado.identificacion;
             usuario.puesto =usuarioSeleccionado.puesto;
             usuario.tcontrato=usuarioSeleccionado.tcontrato;
@@ -107,13 +118,14 @@ export default function Usuarios() {
   
     const peticionDelete=async()=>{
        const token = localStorage.getItem('token');
-       await axios.delete('/empleado/eliminar/'+usuarioSeleccionado.id,{headers:{token:token}})
+       console.log(usuarioSeleccionado);
+       await axios.delete('/empleado/eliminar/'+usuarioSeleccionado._id,{headers:{token:token}})
       .then(response=>{
-        setData(data.filter(usuario=>usuario.id!==usuarioSeleccionado.id));
+        setData(data.filter(usuario=>usuario.id!==usuarioSeleccionado._id));
         abrirCerrarModalEliminar();
       })
     }
-  
+
     const abrirCerrarModalInsertar=()=>{
       setModalInsertar(!modalInsertar);
     }
@@ -140,13 +152,13 @@ export default function Usuarios() {
         <h3>Agregar Nuevo Usuario</h3>
         <TextField name="nombre" className={styles.inputMaterial} label="Nombre" onChange={handleChange}/>
         <br />
-        <TextField name="apellido" className={styles.inputMaterial} label="Apellido" onChange={handleChange}/>
+        <TextField name="apellidos" className={styles.inputMaterial} label="Apellido" onChange={handleChange}/>
         <br />
-        <TextField name="identificación" className={styles.inputMaterial} label="Identificación" onChange={handleChange}/>
+        <TextField name="identificacion" className={styles.inputMaterial} label="Identificación" onChange={handleChange}/>
         <br />
         <TextField name="puesto" className={styles.inputMaterial} label="Puesto" onChange={handleChange}/>
         <br />
-        <TextField name="t_contrato" className={styles.inputMaterial} label="Tipo de contrato" onChange={handleChange}/>
+        <TextField name="tcontrato" className={styles.inputMaterial} label="Tipo de contrato" onChange={handleChange}/>
         <br /><br />
         <div align="right">
           <Button color="primary" onClick={()=>peticionPost()}>Insertar</Button>
@@ -160,13 +172,13 @@ export default function Usuarios() {
         <h3>Editar Usuario</h3>
         <TextField name="nombre" className={styles.inputMaterial} label="Nombre" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.nombre}/>
         <br />
-        <TextField name="apellido" className={styles.inputMaterial} label="Apellido" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.apellido}/>
+        <TextField name="apellidos" className={styles.inputMaterial} label="Apellido" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.apellidos}/>
         <br />
         <TextField name="identificacion" className={styles.inputMaterial} label="Identificación" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.identificacion}/>
         <br />
         <TextField name="puesto" className={styles.inputMaterial} label="Puesto" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.puesto}/>
         <br />
-        <TextField name="t_contrato" className={styles.inputMaterial} label="Tipo de contrato" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.t_contrato}/>
+        <TextField name="tcontrato" className={styles.inputMaterial} label="Tipo de contrato" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.tcontrato}/>
   
         <br /><br />
         <div align="right">
@@ -178,7 +190,7 @@ export default function Usuarios() {
   
     const bodyEliminar=(
       <div className={styles.modal}>
-        <p>Estás seguro que deseas eliminar la consola <b>{usuarioSeleccionado && usuarioSeleccionado.nombre}</b> ? </p>
+        <p>Estás seguro que deseas eliminar el usuario <b>{usuarioSeleccionado && usuarioSeleccionado.nombre}</b> ? </p>
         <div align="right">
           <Button color="secondary" onClick={()=>peticionDelete()} >Sí</Button>
           <Button onClick={()=>abrirCerrarModalEliminar()}>No</Button>
@@ -213,7 +225,7 @@ export default function Usuarios() {
                <TableCell>{usuario.apellidos}</TableCell>
                <TableCell>{usuario.identificacion}</TableCell>
                <TableCell>{usuario.puesto}</TableCell>
-               <TableCell>{usuario.t_contrato}</TableCell>
+               <TableCell>{usuario.tcontrato}</TableCell>
                <TableCell>
                  <Edit className={styles.iconos} onClick={()=>seleccionarUsuario(usuario, 'Editar')}/>
                  &nbsp;&nbsp;&nbsp;

@@ -16,6 +16,7 @@ import Dashboard from './components/Dashboard';
 
 import './App.css';
 import Users from "./components/Users";
+import Usuarios from "./components/Usuarios";
 
 
 
@@ -59,6 +60,7 @@ function App() {
           <Route path='/users' element={<Users/>} />
           <Route path='/login' element={<SignIn/>} />
           <Route path='/register' element={<SignUp/>} />
+          <Route path='/usuarios' element={<Usuarios/>} />
           
         </Routes>
       </div>
