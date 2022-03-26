@@ -25,6 +25,7 @@ import Client from "./components/Clients";
 import Reportes from "./components/Reports";
 import Integraciones from "./components/Integrations";
 import Mapas from "./components/Maps";
+import Ejemplo from "./components/Ejemplo";
 
 const estaAutenticado =()=>{
   const token = localStorage.getItem('token');
@@ -75,6 +76,7 @@ function App() {
           <Route exact path='/register' element={<SignUp/>} />
           <Route exact path='/usuarios' element={<Usuarios/>} />
           <Route exact path='/consulta' element={<Consulta/>} />
+          <Route exact path='/ejemplo' element={<Ejemplo/>} />
            
           <Route path='*' element={<NotFound/>} />
           

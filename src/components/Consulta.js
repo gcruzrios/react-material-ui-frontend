@@ -69,29 +69,21 @@ function Consulta() {
           setConsulta(response.data);
           console.log(response.data);
           setUsuarioSeleccionado(response.data[0]);
+
+        //   document.getElementById("nombre").value = usuarioSeleccionado.nombre;
+        //   document.getElementById("papellido").value = usuarioSeleccionado.papellido;
+        //   document.getElementById("sapellido").value = usuarioSeleccionado.sapellido;
+          
         })
 
         console.log(usuarioSeleccionado);
       };
 
-      const handleChange=e=>{
-        const {name, value}=e.target;
-        // setUsuarioSeleccionado(prevState=>({
-        //   ...prevState,
-        //   [name]: value
-        // }))
-        console.log(usuarioSeleccionado);
-      }
+       useEffect(() => {
 
-      const RellenarValores = () =>{
-
-      }
-
-    //   useEffect(() => {
-
-  
+        handleSubmit();
        
-    //   }, [])
+       }, [])
       
   return (
     <ThemeProvider theme={theme}>
@@ -139,9 +131,8 @@ function Consulta() {
               label="Nombre"
               name="nombre"
               autoComplete="nombre"
-              onChange={handleChange}
               autoFocus
-              value={usuarioSeleccionado.nombre}
+              value={usuarioSeleccionado.NOMBRE}
             />
             
             <TextField
@@ -152,7 +143,7 @@ function Consulta() {
               label="Primer Apellido"
               name="papellido"
               autoComplete="Primer apellido"
-              value={usuarioSeleccionado.papellido}
+              value={usuarioSeleccionado.PAPELLIDO}
               autoFocus
             />
             
@@ -164,7 +155,7 @@ function Consulta() {
               label="Segundo Apellido"
               name="sapellido"
               autoComplete="Segundo Apellido"
-              value={usuarioSeleccionado.sapellido}
+              value={usuarioSeleccionado.SAPELLIDO}
               autoFocus
             />
             
