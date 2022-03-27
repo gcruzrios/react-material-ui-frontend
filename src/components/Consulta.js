@@ -109,7 +109,7 @@ function Consulta() {
               required
               fullWidth
               id="cedula"
-              label="Numero de cedula"
+              label="Número de cédula con ceros sin guiones"
               name="cedula"
               autoComplete="cedula"
               autoFocus

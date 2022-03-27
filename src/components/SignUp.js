@@ -39,17 +39,20 @@ const theme = createTheme();
 
 export default function SignUp() {
 
-
+    const [identificacion, setIdentificacion] = useState('');
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
+    const [rcontrasena, setRcontrasena] = useState('');
+    
     const [nombre, setNombre] = useState('');
-
+    const [papellido, setPapellido] = useState('');
+    const [sapellido, setSapellido] = useState('');
 
   
     const handleLogin= async(e) =>{
         e.preventDefault();
 
-        const usuario = {nombre, correo, contrasena}
+        const usuario = {identificacion, nombre, papellido, sapellido, correo, contrasena}
 
         //console.log(usuario);
 
@@ -123,6 +126,18 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleLogin} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
+                <Grid item xs={12} sm={12}>
+                <TextField
+                  autoComplete="Identificacion"
+                  name="identificacion"
+                  required
+                  fullWidth
+                  id="identificacion"
+                  label="Identificación"
+                  autoFocus
+                  onChange={(e)=>setNombre(e.target.value)}
+                />
+              </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
                   autoComplete="Nombre Completo"
@@ -135,16 +150,26 @@ export default function SignUp() {
                   onChange={(e)=>setNombre(e.target.value)}
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="papellido"
+                  label="Primer Apellido"
+                  name="papellido"
+                  autoComplete="Apellido"
                 />
-              </Grid> */}
+              </Grid> 
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="sapellido"
+                  label="Segundo Apellido"
+                  name="sapellido"
+                  autoComplete="Apellido"
+                />
+              </Grid> 
               <Grid item xs={12}>
                 <TextField
                   required
@@ -166,6 +191,19 @@ export default function SignUp() {
                   id="contrasena"
                   autoComplete="new-password"
                   onChange={(e)=>setContrasena(e.target.value)}
+                />
+              </Grid>
+              
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="contrasena"
+                  label="Repetir Contraseña"
+                  type="password"
+                  id="rcontrasena"
+                  autoComplete="new-password"
+                  onChange={(e)=>setRcontrasena(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>

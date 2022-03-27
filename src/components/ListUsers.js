@@ -49,7 +49,7 @@ const styles = {
   }
 };
 
-export default function Orders(){
+export default function ListUsers(){
   const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]=useState(false);
   const [modalEditar, setModalEditar]=useState(false);
@@ -89,9 +89,9 @@ export default function Orders(){
     const idUsuario = localStorage.getItem('idUsuario');
     const token = localStorage.getItem('token');
   
-    await axios.get('/empleado/listar-empleados-jefe/'+idUsuario,{headers:{token:token}})
+    await axios.get('/jefe/listar',{headers:{token:token}})
     .then(response=>{
-      setData(response.data);
+      setData(response.data.respuesta);
     })
   }
   
@@ -109,7 +109,7 @@ export default function Orders(){
 
   const peticionPut=async()=>{
      const token = localStorage.getItem('token');
-     await axios.put('/empleado/actualizar/'+usuarioSeleccionado._id, usuarioSeleccionado,{headers:{token:token}})
+     await axios.put('/jefe/actualizar/'+usuarioSeleccionado._id, usuarioSeleccionado,{headers:{token:token}})
     .then(response=>{
       var dataNueva=data;
       dataNueva.map(usuario=>{
@@ -118,11 +118,8 @@ export default function Orders(){
           usuario.nombre=usuarioSeleccionado.nombre;
           usuario.papellido=usuarioSeleccionado.papellido;
           usuario.sapellido=usuarioSeleccionado.sapellido;
-          usuario.sexo=usuarioSeleccionado.sexo;
-          usuario.puesto =usuarioSeleccionado.puesto;
-          usuario.tcontrato=usuarioSeleccionado.tcontrato;
-          usuario.jefe=usuarioSeleccionado.jefe;
-          
+          usuario.correo=usuarioSeleccionado.correo;
+            
         }
       })
       setData(dataNueva);
@@ -133,7 +130,7 @@ export default function Orders(){
   const peticionDelete=async()=>{
      const token = localStorage.getItem('token');
      console.log(usuarioSeleccionado);
-     await axios.delete('/empleado/eliminar/'+usuarioSeleccionado._id,{headers:{token:token}})
+     await axios.delete('/jefe/eliminar/'+usuarioSeleccionado._id,{headers:{token:token}})
     .then(response=>{
       setData(data.filter(usuario=>usuario.id!==usuarioSeleccionado._id));
       abrirCerrarModalEliminar();
@@ -170,12 +167,9 @@ export default function Orders(){
       <br />
       <TextField name="sapellido" variant="standard"  size="small" fullWidth  label="Segundo Apellido" onChange={handleChange}/>
       <br />
-      <TextField name="sexo" variant="standard"  size="small" fullWidth  label="Sexo" onChange={handleChange}/>
+      <TextField name="correo" variant="standard"  size="small" fullWidth  label="Correo" onChange={handleChange}/>
       <br />
-      <TextField name="puesto" variant="standard"  size="small" fullWidth  label="Puesto" onChange={handleChange}/>
       <br />
-      <TextField name="tcontrato" variant="standard"  size="small" fullWidth  label="Tipo de contrato" onChange={handleChange}/>
-      <br /><br />
       <div align="right">
         <Button color="primary" onClick={()=>peticionPost()}>Insertar</Button>
         <Button onClick={()=>abrirCerrarModalInsertar()}>Cancelar</Button>
@@ -190,16 +184,12 @@ export default function Orders(){
       <br />
       <TextField name="nombre"   variant="standard"  size="small" fullWidth  label="Nombre" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.nombre}/>
       <br />
-      <TextField name="papellido"   variant="standard"  size="small" fullWidth  label="Primer Apellido" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.papellido}/>
+      <TextField name="papellido"   variant="standard"  size="small" fullWidth  label="Apellido 1" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.papellido}/>
       <br />
-      <TextField name="sapellido"   variant="standard"  size="small" fullWidth  label="Segundo Apellido" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.sapellido}/>
+      <TextField name="sapellido"   variant="standard"  size="small" fullWidth  label="Apellido 2" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.sapellido}/>
       <br />
-      <TextField name="sexo"   variant="standard"  size="small" fullWidth  label="Sexo" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.sexo}/>
-      <br />
-      <TextField name="puesto"   variant="standard"  size="small" fullWidth  label="Puesto" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.puesto}/>
-      <br />
-      <TextField name="tcontrato"   variant="standard"  size="small" fullWidth  label="Tipo de contrato" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.tcontrato}/>
-
+      <TextField name="correo"   variant="standard"  size="small" fullWidth  label="Correo" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.correo}/>
+      
       <br /><br />
       <div align="right">
         <Button color="primary" onClick={()=>peticionPut()}>Editar</Button>
@@ -223,10 +213,10 @@ export default function Orders(){
 
   return (
     <React.Fragment>
-      <Title>Usuarios Recientes</Title>
+      <Title>Usuarios de Acceso al Sistema</Title>
       <Stack direction="column" spacing={2} alignItems="flex-end">
 
-        <Button
+        {/* <Button
           variant="contained"
           startIcon={<PersonAddAltIcon />}
           sx={{ mt: 1, ml: 1 }}  
@@ -234,20 +224,18 @@ export default function Orders(){
           onClick={()=>abrirCerrarModalInsertar()}
           >
           Agregar Usuario
-        </Button> 
+        </Button>  */}
       </Stack>
       <br/>
     <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Identificación</TableCell>
+            <TableCell>Identificacion</TableCell>
             <TableCell>Nombre</TableCell>
-            <TableCell>Apellido</TableCell>
-            <TableCell>Apellido</TableCell>
-            <TableCell>Sexo</TableCell>
-            <TableCell>Puesto</TableCell>
-            <TableCell>Tipo de contrato</TableCell>
-            <TableCell align="right">Beneficio</TableCell>
+            <TableCell>Apellido 1</TableCell>
+            <TableCell>Apellido 2</TableCell>
+            
+            <TableCell>Correo</TableCell>
             <TableCell>Acciones</TableCell>
             
           </TableRow>
@@ -259,41 +247,28 @@ export default function Orders(){
               <TableCell>{usuario.nombre}</TableCell>
               <TableCell>{usuario.papellido}</TableCell>
               <TableCell>{usuario.sapellido}</TableCell>
-              <TableCell>{usuario.sexo}</TableCell>
-              <TableCell>{usuario.puesto}</TableCell>
-              <TableCell>{usuario.tcontrato}</TableCell>
-              <TableCell align="right">500000.00</TableCell>
+              <TableCell>{usuario.correo}</TableCell>
               <TableCell>
                
-              <IconButton 
-                  aria-label="delete" 
-                  variant="contained" 
-                  onClick={()=>seleccionarUsuario(usuario, 'Editar')}
-                  color="primary" 
-                  size="large">
-                  <EditIcon/>
-              </IconButton>
+                  <IconButton 
+                      aria-label="delete" 
+                      variant="contained" 
+                      onClick={()=>seleccionarUsuario(usuario, 'Editar')}
+                      color="primary" 
+                      size="large">
+                      <EditIcon/>
+                  </IconButton>
 
-              <IconButton 
-                  aria-label="delete" 
-                  variant="contained" 
-                  color="error" 
-                  onClick={()=>seleccionarUsuario(usuario, 'Eliminar')}
-                  size="large">
-                  <DeleteIcon/>
-              </IconButton>
+                  <IconButton 
+                      aria-label="delete" 
+                      variant="contained" 
+                      color="error" 
+                      onClick={()=>seleccionarUsuario(usuario, 'Eliminar')}
+                      size="large">
+                      <DeleteIcon/>
+                  </IconButton>
                  
-                 &nbsp; 
-                {/* <Button 
-                  onClick={handleEdit}
-                  startIcon={<DeleteIcon />}
-                  variant="contained" 
-                  sx={{ mt: 1, ml: 1 }}
-                  color="error">
-                  
-                </Button>  */}
-
-               
+                              
                 
               </TableCell>
           </TableRow>
@@ -302,10 +277,6 @@ export default function Orders(){
       </Table>
 
 
-
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        Ver más usuarios
-      </Link>
 
      <Modal
       open={modalInsertar}

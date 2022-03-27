@@ -28,6 +28,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import AppTopBar from './AppTopBar';
 import Usuarios from './Usuarios';
+import ListUsers from './ListUsers';
 
 
 function Copyright(props) {
@@ -103,10 +104,9 @@ function UsersContent() {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
-                  }}
+                   }}
                 >
-                    {/* <Usuarios />   */}
+                    <ListUsers />  
                 </Paper> 
               </Grid>
             
