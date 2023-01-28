@@ -19,6 +19,11 @@ import Users from "./components/Users";
 import Usuarios from "./components/Usuarios";
 import Consulta from "./components/Consulta";
 
+import FormClient from "./components/FormClient";
+import FormSelect from "./components/FormSelect";
+
+
+
 
 import Request from "./components/Requests";
 import Client from "./components/Clients";
@@ -74,9 +79,14 @@ function App() {
 
           <Route exact path='/login' element={<SignIn/>} />
           <Route exact path='/register' element={<SignUp/>} />
+
+          <Route exact path='/clients/add-client' element={<FormClient/>} />
+          <Route exact path='/clients/edit-client' element={<FormClient/>} />
           <Route exact path='/usuarios' element={<Usuarios/>} />
           <Route exact path='/consulta' element={<Consulta/>} />
           <Route exact path='/ejemplo' element={<Ejemplo/>} />
+          <Route exact path='/form-select' element={<FormSelect/>} />
+          
            
           <Route path='*' element={<NotFound/>} />
           

@@ -31,7 +31,7 @@ import AppTopBar from './AppTopBar';
 import Usuarios from './Usuarios';
 import ListClients from './ListClients';
 import AddClient from './AddClient';
-
+import EditClient from './EditClient';
 
 
 function Copyright(props) {
@@ -66,22 +66,22 @@ function preventDefault(event) {
 
  
  
- function FormsClient(){
+ function FormClient(){
 
   const location = useLocation();
 
-  if (location.pathname ===''){
-    return "<ListClients/>";
+  if (location.pathname ==='/clients/edit-client'){
+    return <EditClient/>;
   }
   if (location.pathname ==='/clients/add-client'){
-    return "<AddClient/>";
+    return <AddClient/>;
   }
 
 
  }
 
 
-function ClientsContent() {
+function FormClientContent() {
 
   const [open, setOpen] = React.useState(true);
   
@@ -133,7 +133,7 @@ function ClientsContent() {
                   }}
                 > 
                 
-                     <ListClients />  
+                    <FormClient/>
                 </Paper> 
               </Grid>
             
@@ -150,5 +150,5 @@ function ClientsContent() {
 //export default Users
 
 export default function Client() {
-    return <ClientsContent />;
+    return <FormClientContent />;
 }

@@ -259,7 +259,7 @@ export default function Orders(){
               <TableCell>{usuario.nombre}</TableCell>
               <TableCell>{usuario.papellido}</TableCell>
               <TableCell>{usuario.sapellido}</TableCell>
-              <TableCell>{usuario.sexo}</TableCell>
+              <TableCell>{usuario.sexo===1?'Masculino':'Femenino'}</TableCell>
               <TableCell>{usuario.puesto}</TableCell>
               <TableCell>{usuario.tcontrato}</TableCell>
               <TableCell align="right">500000.00</TableCell>
@@ -284,14 +284,7 @@ export default function Orders(){
               </IconButton>
                  
                  &nbsp; 
-                {/* <Button 
-                  onClick={handleEdit}
-                  startIcon={<DeleteIcon />}
-                  variant="contained" 
-                  sx={{ mt: 1, ml: 1 }}
-                  color="error">
-                  
-                </Button>  */}
+               
 
                
                 

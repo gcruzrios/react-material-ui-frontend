@@ -134,6 +134,10 @@ export default function AppTopBar(props) {
     if (location.pathname ==='/maps'){
       return "Mapas";
     }
+    if (location.pathname ==='/clients/add-client'){
+      return "Agregar Cliente";
+    }
+   
   } 
    
   const toggleDrawer = () => {
