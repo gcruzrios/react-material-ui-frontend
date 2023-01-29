@@ -54,7 +54,7 @@ export default function SignUp() {
 
         const usuario = {identificacion, nombre, papellido, sapellido, correo, contrasena}
 
-        //console.log(usuario);
+        console.log(usuario);
 
         const respuesta= await axios.post(`/jefe/crear`, usuario);
         console.log(respuesta);
@@ -135,7 +135,7 @@ export default function SignUp() {
                   id="identificacion"
                   label="Identificación"
                   autoFocus
-                  onChange={(e)=>setNombre(e.target.value)}
+                  onChange={(e)=>setIdentificacion(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
@@ -158,6 +158,7 @@ export default function SignUp() {
                   label="Primer Apellido"
                   name="papellido"
                   autoComplete="Apellido"
+                  onChange={(e)=>setPapellido(e.target.value)}
                 />
               </Grid> 
               <Grid item xs={12} sm={6}>
@@ -168,6 +169,7 @@ export default function SignUp() {
                   label="Segundo Apellido"
                   name="sapellido"
                   autoComplete="Apellido"
+                  onChange={(e)=>setSapellido(e.target.value)}
                 />
               </Grid> 
               <Grid item xs={12}>
